@@ -19,7 +19,7 @@ class User(db.Model):
     email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
 
     # Asociacion con tablas
-    follower: Mapped[List["Follower"]]= relationship(back_populates = "from_id")
+    follower: Mapped[List["Follower"]]= relationship(back_populates = "user_id")
     posts: Mapped[List["Post"]] = relationship(back_populates = "user")
     comentarios: Mapped[List["Comment"]] = relationship(back_populates = "usuario")
 
@@ -33,7 +33,7 @@ class User(db.Model):
             # do not serialize the password, its a security breach
         }
 
-# Follower como tabla de asociación para una relación muchos-a-muchos entre Usuarios
+
 class Follower(db.Model):
     __tablename__ = "follower"
     
@@ -41,7 +41,7 @@ class Follower(db.Model):
     user_to_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
 
     # asociacion con tablas
-    from_id: Mapped["User"]= relationship(back_populates = "follower")
+    user_id: Mapped["User"]= relationship(back_populates = "follower")
 
 
 class Post(db.Model):
